@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login - Chat Application For Friends</title>
+    <link href="/css/index.css" rel="stylesheet" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+
+  <body>
+    <h1>Login to Friends Chat Server</h1>
+    <form 
+    id="login" 
+    action="/security/login" 
+    method="POST"
+    enctype="application/x-www-form-urlencoded"  
+    autocomplete="on" 
+    class="form" >
+      <!--username!...-->
+      <div class="form_username">
+        <p><label for="username">Username:</label></p>
+        <p>
+          <input
+            id="username"
+            type="text"
+            name="username"
+            placeholder="Sergio"
+            title="Single word (letters or numbers) with no spaces."
+            pattern="\w+"
+            minlength="4"
+            maxlength="20"
+            required
+          />
+          <small>Spaces are not allowed. The minimum length 4, the maximum 20
+            characters.</small>
+        </p>
+      </div>
+
+      <!--password...-->
+      <div class="form_password">
+        <p><label for="password">Password:</label></p>
+
+        <input
+          id="password"
+          type="password"
+          name="password"
+          placeholder="?my1password!"
+          title="Include at least a special symbol a
+number and a letter"
+          pattern="[^\s]"
+          minlength="5"
+          maxlength="20"
+          required
+        />
+        <small>
+          No spaces allowed. Minimum length 5, maximum 20 characters.
+        </small>
+        <!--
+        <p>To make it secure it should contain:</p>
+        <ul>
+          <li>special characters,</li>
+          <li>numbers,</li>
+          <li>letters capital and lowercase.</li>
+        </ul>
+        --!>
+      </div>
+      <div class="form_submit">
+      <input id="loginButton" type="submit" value="Login"/>
+      </div>
+    </form>
+  </body>
+</html>

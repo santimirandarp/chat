@@ -1,0 +1,9 @@
+html {
+  display: grid;
+  place-items: center;
+  min-height: 350px;
+  min-width: 350px;
+  height: 100vh;
+}
+
+/*# sourceMappingURL=layout.css.map */

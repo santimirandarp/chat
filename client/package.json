@@ -1,0 +1,22 @@
+{
+  "name": "Chat App Client Side",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prettier": "npx prettier -c",
+    "lint": "npx eslint **/*.html",
+    "sass": "npx sass public/scss:public/css",
+    "nodemon": "nodemon --watch **/*.html **/*.scss --exec \" npm run sass && npm run lint && npm run prettier\""
+  },
+  "keywords": [],
+  "author": "Santiago Miranda <misterybodon@protonmail.com> (https://github.com/santimirandarp)",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-plugin-html": "^6.2.0",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.6.2",
+    "sass": "^1.51.0"
+  }
+}
