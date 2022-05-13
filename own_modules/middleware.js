@@ -16,7 +16,10 @@ export async function authenticate(req, res) {
     .collection("users")
     .findOne({ _id: username });
 
+  console.log(password, password.length, await bcrypt.compare(password, user.password))
+
   const trust = user && (await bcrypt.compare(password, user.password));
+
 
   if (trust) {
     // set session cookie
@@ -38,7 +41,8 @@ export async function register(req, res) {
   // Blowfish hash.
   const saltRounds = 10;
   const salt = await bcrypt.genSalt(saltRounds);
-  const hash = await bcrypt.hash(password, salt);
+  const hash = await bcrypt.hash(password.toString(), salt);
+  console.log(password.toString())
 
   // Create user and Store hash + username in your User DB.
   const insert = await users.insertOne({ _id: username, password: hash });

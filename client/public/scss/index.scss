@@ -1,24 +1,5 @@
 @use "./reset.scss";
 @use "./general.scss";
 @use "./layout.scss";
+@use "./form.scss";
 
-input,
-small {
-  min-width: 350px;
-  max-width: 350px;
-  display: block;
-}
-input:focus {
-  border: 1px dashed rgba(125, 15, 44, 0.7);
-}
-
-form {
-  padding-top: 1.5rem;
-}
-.form_ {
-  &_username,
-  &_password,
-  &_button {
-    padding-top: 1rem;
-  }
-}

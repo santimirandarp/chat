@@ -13,29 +13,25 @@
     <h1>Login to Friends Chat Server</h1>
     <form 
     id="login" 
-    action="/security/login" 
-    method="POST"
     enctype="application/x-www-form-urlencoded"  
     autocomplete="on" 
     class="form" >
       <!--username!...-->
       <div class="form_username">
         <p><label for="username">Username:</label></p>
-        <p>
           <input
             id="username"
             type="text"
             name="username"
             placeholder="Sergio"
             title="Single word (letters or numbers) with no spaces."
-            pattern="\w+"
+            pattern="\w{4,20}"
             minlength="4"
             maxlength="20"
             required
           />
           <small>Spaces are not allowed. The minimum length 4, the maximum 20
             characters.</small>
-        </p>
       </div>
 
       <!--password...-->
@@ -49,25 +45,25 @@
           placeholder="?my1password!"
           title="Include at least a special symbol a
 number and a letter"
-          pattern="[^\s]"
+          pattern="[^\s]+"
           minlength="5"
           maxlength="20"
           required
         />
+        <div class="form_seepwd">
+        <input id='seepwd' type='checkbox'/>
+        <span>See password</div>
+        </div>
         <small>
           No spaces allowed. Minimum length 5, maximum 20 characters.
         </small>
-        <!--
-        <p>To make it secure it should contain:</p>
-        <ul>
-          <li>special characters,</li>
-          <li>numbers,</li>
-          <li>letters capital and lowercase.</li>
-        </ul>
-        --!>
       </div>
       <div class="form_submit">
-      <input id="loginButton" type="submit" value="Login"/>
+      <input 
+      formmethod="post"
+      formaction="/security/login" 
+      type="submit" 
+      value="Login"/>
       </div>
     </form>
   </body>

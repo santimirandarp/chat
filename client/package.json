@@ -6,8 +6,7 @@
   "scripts": {
     "prettier": "npx prettier -c",
     "lint": "npx eslint **/*.html",
-    "sass": "npx sass public/scss:public/css",
-    "nodemon": "nodemon --watch **/*.html **/*.scss --exec \" npm run sass && npm run lint && npm run prettier\""
+    "sass": "npx sass public/scss:public/css --watch"
   },
   "keywords": [],
   "author": "Santiago Miranda <misterybodon@protonmail.com> (https://github.com/santimirandarp)",

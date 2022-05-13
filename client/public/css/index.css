@@ -10,20 +10,20 @@ a {
   text-decoration: none;
 }
 
-button {
+button, .button, input[type=submit] {
   cursor: pointer;
   background-color: rgb(11, 126, 153);
   opacity: 0.8;
   box-shadow: 1px 1px rgba(250, 250, 250, 0.3);
   transition: color 1s ease;
+  position: relative;
 }
-button:hover {
+button:hover, .button:hover, input[type=submit]:hover {
   opacity: 1;
 }
 
 p {
-  padding-top: 1rem;
-  padding-bottom: 0.25rem;
+  padding: 1rem 0 0.25rem 0;
 }
 
 input {
@@ -50,6 +50,10 @@ h1 {
   padding-top: 2rem;
 }
 
+div {
+  padding: 1rem 0 0.25rem 0;
+}
+
 html {
   display: grid;
   place-items: center;
@@ -69,12 +73,19 @@ input:focus {
   border: 1px dashed rgba(125, 15, 44, 0.7);
 }
 
-form {
+.form {
   padding-top: 1.5rem;
 }
 
-.form__username, .form__password, .form__button {
-  padding-top: 1rem;
+.form_seepwd {
+  display: flex;
+  flex-direction: row;
+}
+.form_seepwd input[type=checkbox] {
+  display: inline-block;
+  min-width: unset;
+  max-width: unset;
+  margin-right: 0.3rem;
 }
 
 /*# sourceMappingURL=index.css.map */
