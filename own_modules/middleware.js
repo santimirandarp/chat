@@ -16,12 +16,6 @@ export async function authenticate(req, res) {
         .collection("users")
         .findOne({ _id: username });
 
-    console.log(
-        password,
-        password.length,
-        await bcrypt.compare(password, user.password)
-    );
-
     const trust = user && (await bcrypt.compare(password, user.password));
 
     if (trust) {

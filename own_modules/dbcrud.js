@@ -1,27 +1,23 @@
-import { msgModel } from "./model.js";
-
-const find = (skip, limit, done) => {
-    msgModel
+const find = async (coll, skip, limit) => {
+    return await coll
         .find({})
         .sort({ createdAt: -1 })
         .skip(parseInt(skip))
         .limit(parseInt(limit))
-        .exec(done);
 };
 
-const update = (id, msg, done) =>
-    msgModel.update(
+const update = async(coll, id, msg) => {
+    return coll.update(
         { _id: id },
         {
             msg: msg,
             createdAt: Date(),
         },
-        done
-    );
+    )};
 
-const save = (msg, done) => new msgModel(msg).save(done);
+const save = async (coll, msg) => await coll.insertOne(msg)
 
-const del = (id, done) => msgModel({ _id: id }).deleteOne(done);
+const del = async (coll, id) => await coll.deleteOne({ _id: id })
 
 export {
     find as findMessages,

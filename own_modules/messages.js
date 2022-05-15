@@ -3,10 +3,15 @@ const router = express.Router();
 
 import { findMessages } from "./dbcrud.js";
 
-router.get("/:skip/:limit", (req, res) => {
+router.get("/:skip/:limit", async(req, res) => {
     const { skip, limit } = req.params;
-    findMessages(skip, limit, (err, doc) =>
-        err ? res.status(500).json({ err: err.message }) : res.json(doc)
+	try{
+	    const msgs = await findMessages(skip, limit)
+	 res.json(doc)
+	} catch(e){
+	console.error(e)
+	res.status(500).json({ err: e.message })
+	}
     );
 });
 

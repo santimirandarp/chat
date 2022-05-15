@@ -11,11 +11,6 @@ import express from "express";
 import security from "./own_modules/security.js";
 import { restrict } from "./own_modules/middleware.js";
 import messages from "./own_modules/messages.js";
-import {
-    updateMessage,
-    deleteMessage,
-    saveMessage,
-} from "./own_modules/dbcrud.js";
 
 // App
 const app = express();
@@ -29,28 +24,66 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-app.use(express.static(join(__dirname, "/client/public")));
-app.use(express.static(join(__dirname, "/client/public/favicon")));
+app.use(express.static(join(__dirname, "dist/client/public")));
+app.use(express.static(join(__dirname, "dist/client/public/favicon")));
 
 /* ========================================== */
 
 async function run() {
     // main site
     app.get("/", restrict, (req, res) => {
-        res.sendFile(join(__dirname, "/index.html"));
+        res.sendFile(join(__dirname, "client/dist/index.html"));
     });
 
     // security
     app.use("/security", security);
 
-    // messages (crud)
+    // msgs
+    app.use("/messages", messages);
 
     // Other routes
     app.get("*", restrict, (req, res) => res.send("<p>Nothing to show...</p>"));
 
-    // error handlers
 }
 
 run().catch(console.dir);
+
+
+
+/* ------------SOCKET---------- */
+
+io.on('connection', async (socket) => {
+
+    socket.on('save message', async(msg) => {
+        //the socket sends a message object
+	    try{
+		const msg = await saveMessage(msg)
+
+                //only to the user sending the message, we now have the _id
+                socket.emit('message saved', { _id: s._id, tid: s.tid });
+                delete s['tid'];
+                socket.broadcast.emit('new message', s);
+
+	    } catch(e){ 
+		    socket.emit('save message error', err) 
+	    }
+        });
+
+    socket.on('delete message', (_id) => {
+        try{
+	    const del = deleteMessage(_id)
+            io.emit('message deleted', 'This message was deleted');
+	} catch(e){ socket.emit('delete message error', err) };
+    });
+
+    socket.on('update message', ({ _id, msg }) => {
+	    try{
+        const upd = await updateMessage({ _id, msg })
+            socket.emit('update saved', suc);
+            socket.broadcast.emit('update saved', { id: _id, updateTo: msg });
+	    } catch(e){ socket.emit('update message error', err) };
+    });
+})
+
 
 app.listen(3000, () => console.log("listening on 3000"));
