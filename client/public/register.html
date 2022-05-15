@@ -7,10 +7,15 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"> 
+
   </head>
 
   <body>
-    <h1>Registration in Friends Chat Server.</h1>
+	  <h1>Registration in <em>Friends</em> Chat Server</h1>
     <form
       id="register"
       action="/security/register"
@@ -22,7 +27,6 @@
       <!--username!...-->
       <div class="form_username">
         <p><label for="username">Username:</label></p>
-        <p>
           <input
             id="username"
             type="text"
@@ -38,7 +42,6 @@
             >Spaces are not allowed. The minimum length 4, the maximum 20
             characters.</small
           >
-        </p>
       </div>
 
       <!--password...-->
@@ -57,6 +60,10 @@ number and a letter"
           maxlength="20"
           required
         />
+        <div class="form_seepwd">
+        <input id='seepwd' type='checkbox'/>
+        <span>See password</div>
+        </div>
         <small>
           No spaces allowed. Minimum length 5, maximum 20 characters.
         </small>
@@ -65,5 +72,7 @@ number and a letter"
         <input id="loginButton" type="submit" value="Login" />
       </div>
     </form>
+    <p class="center">😀 Already registered? <a href="/security/login" title="login">Login here!</a></p>
+   <script src="/js/checkbox.js"></script>
   </body>
 </html>

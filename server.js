@@ -1,10 +1,26 @@
-import express from "express";
+//Node Modules
+import http from 'http';
+import { Server } from 'socket.io';
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
+// installed modules
+import express from "express";
+
+// local modules
 import security from "./own_modules/security.js";
 import { restrict } from "./own_modules/middleware.js";
+import messages from './own_modules/messages.js';
+import { updateMessage, deleteMessage, saveMessage } from './own_modules/dbcrud.js';
 
+// App
+const app = express();
+//http server
+const server = http.createServer(app); //set app as httphandler
+//io server
+const io = new Server(server);
+
+// trick for variables
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 

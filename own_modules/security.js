@@ -40,12 +40,16 @@ router.use(
 
 router
   .route("/register")
-  .get((req, res) => res.sendFile(join(__dirname, "../client/public/register.html")))
+  .get((req, res) =>
+    res.sendFile(join(__dirname, "../client/public/register.html"))
+  )
   .post(register);
 
 router
   .route("/login")
-  .get((req, res) => res.sendFile(join(__dirname, "../client/public/login.html")))
+  .get((req, res) =>
+    res.sendFile(join(__dirname, "../client/public/login.html"))
+  )
   .post(authenticate);
 
 router.get("/logout", (req, res) => {
