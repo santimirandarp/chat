@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet"/>
+  </head> 
+  <body>
+
+    <div class="wrapper">
+    <aside>
+      <div> user props and profile</div>
+
+      <h1>Users</h1>
+      <div><p>QoD</p><p id="qod"></p></div>
+    </aside>
+
+    <main>
+      <button id="wantMore">More</button>
+      <ul id="messages"></ul>
+      <form action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+      </form>
+    </main>
+    </div>
+
+    <script src="/bundle.js"></script>
+
+  </body>
+</html>

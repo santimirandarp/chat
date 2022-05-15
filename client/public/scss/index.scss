@@ -1,7 +1,7 @@
-@use "./reset.scss";
-@use "./general.scss";
-@use "./layout.scss";
-@use "./form.scss";
-@use "./fonts.scss";
+@use "./security/reset.scss";
+@use "./security/general.scss";
+@use "./security/layout.scss";
+@use "./security/form.scss";
+@use "./security/fonts.scss";
 
 p.center{text-align:center}

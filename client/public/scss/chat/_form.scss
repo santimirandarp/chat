@@ -1,0 +1,21 @@
+@use "variables" as *;
+
+form {
+  color:$formC;
+  padding: 0.25rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  @include flexcenter;
+  height:$formHeight;
+  input { 
+    background-color:$inputBg;
+    padding:0 0.5rem; //bit of padding on sides
+    width:100%;
+  } 
+  button { 
+    flex-basis:5rem; 
+    background-color: adjust-color($orange, $alpha:-0.1);
+  } 
+}
+

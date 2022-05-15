@@ -1,0 +1,41 @@
+@use "./chat/resets";
+@use "./chat/variables" as *;
+@use "./chat/font";
+@use "./chat/messages";
+@use "./chat/form";
+
+body { 
+  color:$bodyC;
+  background: $bodyBg;
+  .wrapper {
+    @include flexcenter;
+    justify-content:space-around;
+    height:100vh;
+  }
+}
+
+main{ position:relative; width:75%; }
+
+aside{
+  h1 { 
+   color:$orange;
+   text-align:center;
+ }
+  width:20%;
+  box-shadow:1px 1px 1px rgba(0,0,0,0.5);
+  margin:0 auto;// h-centered
+}
+
+#wantMore {
+  position:absolute;
+  top:0;
+  right:0;
+}
+
+span.time {
+opacity:0.6;
+margin-left:0.3rem;
+margin-bottom:-4px;
+align-self:end;
+}
+

@@ -1,0 +1,31 @@
+@use "variables" as *;
+
+#messages { 
+  //take out "absolute" height of the form
+  height:calc(100% - #{$formHeight});
+  overflow:auto;
+  li { 
+    @include flexcenter;
+    align-items:center;
+    padding: 0.5rem 2rem;
+    &:nth-child(odd) { background: $liOddBg; }
+}}
+
+.dropdown{
+  margin-bottom:0;
+  margin-left:auto;
+  position:relative;
+  > .options:hover{ cursor:pointer; opacity:0.7; }
+  > .operations {
+    position:absolute;
+    top:110%;
+    left:-3rem;
+    width:auto;
+    height:auto;
+    overflow:auto;
+    display:none;
+    z-index:999;
+  > .delete, .update { padding:0.3rem; }
+  > .delete{ background-color:$delete }
+  > .update{ background-color:$update }
+  }}
