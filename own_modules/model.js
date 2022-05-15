@@ -1,19 +1,19 @@
 // build the model
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 const msgSchema = new Schema({
     msg: {
         type: String,
-        required: true
+        required: true,
     },
     createdAt: {
         type: Date,
         required: true,
         index: true,
-        default: Date()
+        default: Date(),
     },
-    tid: { type: String, required: true, default: '0' }
+    tid: { type: String, required: true, default: "0" },
 });
 
-export const msgModel = mongoose.model('message', msgSchema);
+export const msgModel = mongoose.model("message", msgSchema);

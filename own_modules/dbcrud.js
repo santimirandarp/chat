@@ -1,4 +1,4 @@
-import { msgModel } from './model.js';
+import { msgModel } from "./model.js";
 
 const find = (skip, limit, done) => {
     msgModel
@@ -14,7 +14,7 @@ const update = (id, msg, done) =>
         { _id: id },
         {
             msg: msg,
-            createdAt: Date()
+            createdAt: Date(),
         },
         done
     );
@@ -27,5 +27,5 @@ export {
     find as findMessages,
     save as saveMessage,
     update as updateMessage,
-    del as deleteMessage
+    del as deleteMessage,
 };
