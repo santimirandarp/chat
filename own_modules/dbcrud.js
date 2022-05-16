@@ -1,12 +1,17 @@
-async function find(coll, skip, limit) {
+import { connectDB } from "./connectDB.js";
+
+let db = connectDB(); //preconnect
+
+function find(coll, skip, limit) {
   return coll
     .find({})
     .sort({ createdAt: -1 })
     .skip(parseInt(skip))
-    .limit(parseInt(limit));
+    .limit(parseInt(limit))
+    .toArray()
 }
 
-function update(coll, {_id, msg}) {
+function update(coll, { _id, msg }) {
   return coll.updateOne(
     { _id },
     {
@@ -27,9 +32,9 @@ function del(coll, id) {
 async function findMessages(req, res) {
   const { skip, limit } = req.params;
   try {
-    await db;
-    const doc = await find(db.collection("messages"), skip, limit);
-    console.log("exec find messages", doc);
+    let coll = (await db).collection("messages");
+    const doc = await find(coll, skip, limit);
+    console.log(doc)
     res.json(doc);
   } catch (e) {
     console.error(e);

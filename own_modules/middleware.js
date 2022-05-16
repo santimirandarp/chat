@@ -14,7 +14,6 @@ export function restrict(req, res, next) {
 export async function authenticate(req, res) {
   const { username, password } = req.body;
   db = await db;
-  console.log("the db is...", db);
   const users = db.collection("users");
   const user = await users.findOne({ _id: username });
 
