@@ -2,9 +2,9 @@
   "name": "Chat App Client Side",
   "version": "0.0.0",
   "description": "Client Side of the Friends Chat App",
-  "script":{
-	  "html":"eslint **/*.html --fix && prettier **/*.html --write"
-  }.
+  "scripts":{
+	  "html":"eslint src/**/*.html src/index.html --cache --fix && prettier src/**/*.html src/index.html --write"
+  },
   "main": "index.js",
   "keywords": [],
   "author": "Santiago Miranda <misterybodon@protonmail.com> (https://github.com/santimirandarp)",
