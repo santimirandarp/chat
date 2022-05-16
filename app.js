@@ -1,5 +1,6 @@
 import { join } from "path";
 
+import { connectDB } from "./connectDB.js";
 import access from "./own_modules/access.js";
 import { restrict } from "./own_modules/middleware.js";
 import {
@@ -8,6 +9,8 @@ import {
   saveMessage,
   findMessages,
 } from "./own_modules/dbcrud.js";
+
+let db = connectDB();//preconnect
 
 export async function run(app, dirname) {
   // main site
@@ -25,12 +28,14 @@ export async function run(app, dirname) {
   app.get("*", restrict, (req, res) => res.send("<p>Nothing to show...</p>"));
 }
 
-export function chat(io) {
+export function async chat(io) {
+  const coll = (await db).collection("messages");
   return (socket) => {
     socket.on("save message", async (msg) => {
+      
       // a socket sends a message object
       try {
-        const s = await saveMessage(msg);
+        const s = await saveMessage(coll, msg);
         // replace tid by id for sender
         socket.emit("message saved", { _id: s._id, tid: s.tid });
         delete s["tid"];
@@ -43,7 +48,7 @@ export function chat(io) {
 
     socket.on("delete message", async (_id) => {
       try {
-        const del = await deleteMessage(_id);
+        const del = await deleteMessage(coll, _id);
         if (del) io.emit("message deleted", "This message was deleted");
       } catch (e) {
         socket.emit("delete message error", e);
@@ -52,7 +57,7 @@ export function chat(io) {
 
     socket.on("update message", async ({ _id, msg }) => {
       try {
-        const suc = await updateMessage({ _id, msg });
+        const suc = await updateMessage(coll, { _id, msg });
         socket.emit("update saved", suc);
         socket.broadcast.emit("update saved", { id: _id, updateTo: msg });
       } catch (e) {

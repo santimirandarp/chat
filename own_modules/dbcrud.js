@@ -1,18 +1,14 @@
-import { connectDB } from "./connectDB.js";
-
-const db = connectDB();
-
 async function find(coll, skip, limit) {
-  return await coll
+  return coll
     .find({})
     .sort({ createdAt: -1 })
     .skip(parseInt(skip))
     .limit(parseInt(limit));
 }
 
-function update(coll, id, msg) {
-  return coll.update(
-    { _id: id },
+function update(coll, {_id, msg}) {
+  return coll.updateOne(
+    { _id },
     {
       msg: msg,
       createdAt: Date(),
