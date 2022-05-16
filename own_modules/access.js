@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const router = express.Router();
 
-/* ================================================== */
+/* ==================== Session Cookie, Login and Register ============================== */
 
 router.use(express.urlencoded({ extended: true }));
 
@@ -23,10 +23,13 @@ router.use(
             /* domain */
             path: "/" /* and subpaths */,
             httpOnly: true /*  no access from Document.cookie */,
+	 /* If true, only sent encrypted over HTTPS; 
+	  * If false, also on HTTP (cleartext). 
+	  */
             secure:
                 router.get("env") === "production"
                     ? true
-                    : false /* Needs cert (TLS). If true, only sent encrypted over  HTTPS; If false, also on HTTP (cleartext). */,
+                    : false,
             sameSite: true /* only send to the webpage (domain) that **stored** it */,
         },
         resave: false /* don't save session if unmodified */,
