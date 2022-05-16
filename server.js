@@ -1,4 +1,6 @@
 //Node Modules
+import dotenv from 'dotenv';
+dotenv.config();
 import http from "http";
 import { Server } from "socket.io";
 import { fileURLToPath } from "url";
@@ -8,15 +10,16 @@ import { dirname, join } from "path";
 import express from "express";
 
 // local modules
-import security from "./own_modules/security.js";
+import access from "./own_modules/access.js";
 import { restrict } from "./own_modules/middleware.js";
 import messages from "./own_modules/messages.js";
 
-// App
+// Environmental Variables
+const {PORT,PUBLIC} = process.env
+
+// Servers
 const app = express();
-//http server
 const server = http.createServer(app); //set app as httphandler
-//io server
 const io = new Server(server);
 
 // trick for variables
@@ -24,8 +27,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-app.use(express.static(join(__dirname, "dist/client/public")));
-app.use(express.static(join(__dirname, "dist/client/public/favicon")));
+
+app.use(express.static(join(__dirname, PUBLIC)));
+app.use(express.static(join(__dirname, PUBLIC, "favicon")));
 
 /* ========================================== */
 
@@ -36,7 +40,7 @@ async function run() {
     });
 
     // security
-    app.use("/security", security);
+    app.use("/access", access);
 
     // msgs
     app.use("/messages", messages);
@@ -50,40 +54,39 @@ run().catch(console.dir);
 
 
 
-/* ------------SOCKET---------- */
+/* ------------SOCKET SERVER---------- */
 
 io.on('connection', async (socket) => {
 
-    socket.on('save message', async(msg) => {
-        //the socket sends a message object
-	    try{
-		const msg = await saveMessage(msg)
-
-                //only to the user sending the message, we now have the _id
+    socket.on('save message', (msg) => {
+        // a socket sends a message object
+		saveMessage(msg)
+		    .then((s)=>{
+                // replace tid by id for sender 
                 socket.emit('message saved', { _id: s._id, tid: s.tid });
                 delete s['tid'];
+	        // the rest do not need a tid (not for sender)
                 socket.broadcast.emit('new message', s);
-
-	    } catch(e){ 
-		    socket.emit('save message error', err) 
-	    }
+	    })
+		    .catch((e)=> socket.emit('save message error', err) )
         });
 
     socket.on('delete message', (_id) => {
-        try{
-	    const del = deleteMessage(_id)
-            io.emit('message deleted', 'This message was deleted');
-	} catch(e){ socket.emit('delete message error', err) };
+	    deleteMessage(_id)
+		    .then(() => io.emit('message deleted', 'This message was deleted'))
+	            .catch(socket.emit('delete message error', err))
     });
 
     socket.on('update message', ({ _id, msg }) => {
-	    try{
-        const upd = await updateMessage({ _id, msg })
+        updateMessage({ _id, msg })
+		    .then((suc)=>{
             socket.emit('update saved', suc);
             socket.broadcast.emit('update saved', { id: _id, updateTo: msg });
-	    } catch(e){ socket.emit('update message error', err) };
-    });
+	})
+			    .catch((e)=>socket.emit('update message error', e))
+    })
 })
 
 
-app.listen(3000, () => console.log("listening on 3000"));
+
+server.listen(PORT, () => console.log(`listening on ${PORT}`));
