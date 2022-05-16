@@ -1,13 +1,11 @@
 {
   "name": "Chat App Client Side",
   "version": "0.0.0",
-  "description": "",
+  "description": "Client Side of the Friends Chat App",
+  "script":{
+	  "html":"eslint **/*.html --fix && prettier **/*.html --write"
+  }.
   "main": "index.js",
-  "scripts": {
-    "prettier": "npx prettier -c",
-    "lint": "npx eslint **/*.html",
-    "sass": "npx sass public/scss:public/css --watch"
-  },
   "keywords": [],
   "author": "Santiago Miranda <misterybodon@protonmail.com> (https://github.com/santimirandarp)",
   "license": "MIT",

@@ -18,7 +18,10 @@ const dirs = {
 	js:'./src/**/*.js'
 }
 
-export function html() { return src(dirs.html).pipe(dest('./dist/')) }
+export function html() { 
+	return src(dirs.html)
+		.pipe(dest('./dist/')) 
+}
 
 export function buildStyles() {
     return src(dirs.scss)
