@@ -1,6 +1,8 @@
 import { connectDB } from "./connectDB.js";
 import bcrypt from "bcrypt";
 
+let db = connectDB();
+
 export function restrict(req, res, next) {
   if (req.session && req.session.isLogged) {
     next();
@@ -11,10 +13,10 @@ export function restrict(req, res, next) {
 
 export async function authenticate(req, res) {
   const { username, password } = req.body;
-
-  const user = await (await connectDB())
-    .collection("users")
-    .findOne({ _id: username });
+  db = await db;
+  console.log("the db is...", db);
+  const users = db.collection("users");
+  const user = await users.findOne({ _id: username });
 
   const trust = user && (await bcrypt.compare(password, user.password));
 
@@ -32,8 +34,8 @@ export async function authenticate(req, res) {
 
 export async function register(req, res) {
   const { username, password } = req.body;
-  const database = await connectDB();
-  const users = database.collection("users");
+  db = await db;
+  const users = db.collection("users");
 
   // Blowfish hash.
   const saltRounds = 10;

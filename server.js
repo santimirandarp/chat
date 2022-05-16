@@ -10,7 +10,7 @@ import session from "express-session";
 
 import { run, chat } from "./app.js";
 
-const { PORT, PUBLIC } = process.env;
+const { PORT, SECRET, PUBLIC } = process.env;
 
 const app = express();
 const server = http.createServer(app); //set app as httphandler
@@ -19,18 +19,21 @@ const io = new Server(server);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-/* --------------------------------- */
+/* -------------GLOBAL MIDDLEWARES-------------------- */
 
 app.use(express.static(join(__dirname, PUBLIC)));
 app.use(express.static(join(__dirname, PUBLIC, "favicon")));
 
 app.use(express.urlencoded({ extended: true }));
 
+/*
+ * the id will be decrypted, and searched through the ids database
+ * if the session id is there, then the
+ * req.session is populated
+ */
 app.use(
   session({
     cookie: {
-      /* maxAge */
-      /* expires */
       /* domain */
       path: "/" /* and subpaths */,
       httpOnly: true /*  no access from Document.cookie */,
@@ -40,9 +43,7 @@ app.use(
     },
     resave: false /* don't save session if unmodified */,
     saveUninitialized: false /* don't create session until something stored */,
-    secret: process.env.SECRET,
-    /* genid: function that generates a unique ID, i.e avoids clashes. By default uid-safe is used. */
-    /* name: for the session cookie */
+    secret: SECRET,
     /* store: MemoryStore by default. Not for production. Use MongoStore or != ones...*/
   })
 );
@@ -52,8 +53,3 @@ run(app, __dirname).catch(console.dir);
 io.on("connection", chat(io));
 
 server.listen(PORT, () => console.log(`listening on ${PORT}`));
-
-process.on("uncaughtException", (err) => {
-  console.error("There was an uncaught error", err);
-  process.exit(1); // mandatory (as per the Node.js docs)
-});

@@ -2,11 +2,11 @@ import { join } from "path";
 
 import access from "./own_modules/access.js";
 import { restrict } from "./own_modules/middleware.js";
-import messages from "./own_modules/messages.js";
 import {
   deleteMessage,
   updateMessage,
   saveMessage,
+  findMessages,
 } from "./own_modules/dbcrud.js";
 
 export async function run(app, dirname) {
@@ -19,7 +19,7 @@ export async function run(app, dirname) {
   app.use("/access", access);
 
   // msgs
-  app.use("/messages", messages);
+  app.get("/messages/:skip/:limit", findMessages);
 
   // Other routes
   app.get("*", restrict, (req, res) => res.send("<p>Nothing to show...</p>"));

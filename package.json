@@ -4,7 +4,7 @@
   "description": "",
   "main": "bcrypt.js",
   "scripts": {
-    "serve": "nodemon server.js --watch",
+    "serve": "nodemon server.js app.js own_modules/*.js --watch",
     "js":"eslint own_modules/*.js server.js app.js --cache --fix && prettier own_modules/*.js server.js app.js --write"
   },
   "keywords": [],
