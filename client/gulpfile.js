@@ -11,10 +11,12 @@ const sass = gulpSass(dartSass)
 import eslint  from 'gulp-eslint-new';
 import prettier from 'gulp-prettier';
 
-const dirs = { html:'./src/**/*.html', scss:'./src/public/scss/*.scss', css:'./dist/public/css',
-js:'./src/**/*.js'}
-
-// Formatting is done by the text editor (vscode) using the eslint & prettier configs
+const dirs = { 
+	html:'./src/**/*.html', 
+	scss:'./src/public/scss/*.scss', 
+	css:'./dist/public/css',
+	js:'./src/**/*.js'
+}
 
 export function html() { return src(dirs.html).pipe(dest('./dist/')) }
 
@@ -29,7 +31,7 @@ export function buildStyles() {
         .pipe(dest(dirs.css))
 }
 
-
+// by vscode, this is just for random ocassions.
 export function formatJS() {
     return src(dirs.js)
         .pipe(eslint({ configFile: "./.eslintrc.cjs" }))
@@ -38,7 +40,6 @@ export function formatJS() {
         .pipe(dest("./"));
 }
 
-// how to add more than one entry ?
 export function bundleJS() {
     return src('./src/public/js/chat.js')
         .pipe(
@@ -56,7 +57,7 @@ export function bundleJS() {
 
 export function copyCheckbox(){
 	return src('./src/public/js/checkbox.js')
-		.pipe(dest('./dist/public/js/checkbox.js'))
+		.pipe(dest('./dist/public/js/'))
 }
 
 export function watcher(cb) {
