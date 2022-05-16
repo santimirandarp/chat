@@ -1,11 +1,11 @@
-import { connectDB } from "./db.js";
+import { connectDB } from "./connectDB.js";
 import bcrypt from "bcrypt";
 
 export function restrict(req, res, next) {
   if (req.session && req.session.isLogged) {
     next();
   } else {
-    res.redirect("/security/login");
+    res.redirect("/access/login");
   }
 }
 
@@ -38,17 +38,18 @@ export async function register(req, res) {
   // Blowfish hash.
   const saltRounds = 10;
   const salt = await bcrypt.genSalt(saltRounds);
-  const hash = await bcrypt.hash(password.toString(), salt);
-  console.log(password.toString());
+  const hash = await bcrypt.hash(password.trim(), salt);
 
   // Create user and Store hash + username in your User DB.
-  const insert = await users.insertOne({ _id: username, password: hash });
-
-  if (insert.acknowledged) {
-    // set session stuff
-    req.session.isLogged = true;
-    res.redirect("/");
-  } else {
+  try {
+    const insert = await users.insertOne({ _id: username, password: hash });
+    console.log(insert);
+    if (insert.acknowledged) {
+      // set session stuff
+      req.session.isLogged = true;
+      res.redirect("/");
+    }
+  } catch (e) {
     res.json({ err: "User already exist. Try a different one" });
   }
 }

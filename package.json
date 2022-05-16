@@ -5,7 +5,7 @@
   "main": "bcrypt.js",
   "scripts": {
     "serve": "nodemon server.js --watch",
-    "js":"eslint own_modules/*.js server.js --cache --fix && prettier own_modules/*.js server.js --write"
+    "js":"eslint own_modules/*.js server.js app.js --cache --fix && prettier own_modules/*.js server.js app.js --write"
   },
   "keywords": [],
   "author": "Santiago Miranda <misterybodon@protonmail.com> (https://github.com/santimirandarp)",

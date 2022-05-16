@@ -8,14 +8,16 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"> 
-
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
-	  <h1>Registration in <em>Friends</em> Chat Server</h1>
+    <h1>Registration in <em>Friends</em> Chat Server</h1>
     <form
       id="register"
       action="/access/register"
@@ -27,21 +29,21 @@
       <!--username!...-->
       <div class="form_username">
         <p><label for="username">Username:</label></p>
-          <input
-            id="username"
-            type="text"
-            name="username"
-            placeholder="Sergio"
-            title="Single word (letters or numbers) with no spaces."
-            pattern="\w+"
-            minlength="4"
-            maxlength="20"
-            required
-          />
-          <small
-            >Spaces are not allowed. The minimum length 4, the maximum 20
-            characters.</small
-          >
+        <input
+          id="username"
+          type="text"
+          name="username"
+          placeholder="Sergio"
+          title="Single word (letters or numbers) with no spaces."
+          pattern="\w+"
+          minlength="4"
+          maxlength="20"
+          required
+        />
+        <small
+          >Spaces are not allowed. The minimum length 4, the maximum 20
+          characters.</small
+        >
       </div>
 
       <!--password...-->
@@ -55,24 +57,27 @@
           placeholder="?my1password!"
           title="Include at least a special symbol a
 number and a letter"
-          pattern="[^\s]"
+          pattern="\w+[^\s]"
           minlength="5"
           maxlength="20"
           required
         />
         <div class="form_seepwd">
-        <input id='seepwd' type='checkbox'/>
-        <span>See password</div>
+          <input id="seepwd" type="checkbox" />
+          <span>See password</span>
         </div>
         <small>
           No spaces allowed. Minimum length 5, maximum 20 characters.
         </small>
       </div>
       <div class="form_submit">
-        <input id="loginButton" type="submit" value="Login" />
+        <input id="loginButton" type="submit" value="Register" />
       </div>
     </form>
-    <p class="center">😀 Already registered? <a href="/access/login" title="login">Login here!</a></p>
-   <script src="/js/checkbox.js"></script>
+    <p class="center">
+      😀 Already registered?
+      <a href="/access/login" title="login">Login here!</a>
+    </p>
+    <script src="/js/checkbox.js"></script>
   </body>
 </html>
