@@ -5,14 +5,14 @@ dotenv.config();
 
 // Connect DB
 export async function connectDB() {
-    const uri = process.env.MONGOURI;
+  const uri = process.env.MONGOURI;
 
-    const client = new MongoClient(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
-    await client.connect();
+  await client.connect();
 
-    return client.db("chatApp");
+  return client.db("chatApp");
 }
