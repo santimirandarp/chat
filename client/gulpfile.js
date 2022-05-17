@@ -12,8 +12,8 @@ import eslint  from 'gulp-eslint-new';
 import prettier from 'gulp-prettier';
 
 const dirs = { 
-	html:'./src/**/**/*.html', 
-	scss:'./src/public/scss/*.scss', 
+	html:'./src/**/*.html', 
+	scss:'./src/**/*.scss', 
 	css:'./dist/public/css',
 	js:'./src/**/*.js'
 }
@@ -21,14 +21,6 @@ const dirs = {
 export function html() { 
 	return src(dirs.html)
 		.pipe(dest('./dist/')) 
-}
-
-export function formatHTML() { 
-	return src(dirs.html)
-        .pipe(eslint({ configFile: "./.eslintrc.cjs" }))
-        .pipe(eslint.formatEach("compact", process.stderr))
-        .pipe(prettier({ config: "./.prettier.config.cjs" }))
-        .pipe(dest("./src"));
 }
 
 export function buildStyles() {
@@ -42,14 +34,28 @@ export function buildStyles() {
         .pipe(dest(dirs.css))
 }
 
-// by vscode, this is just for random ocassions.
-export function formatJS() {
-    return src(dirs.js)
+
+
+/* formatters not running by default, run by hand or in scripts */
+
+// by vscode, this is just manually for random ocassions.
+export function prettifySass(){
+    return src(dirs.scss)
+        .pipe(prettier({ config: "./.prettier.config.cjs" }))
+        .pipe(dest("./src"));
+}
+
+// by vscode, this is just manually for random ocassions.
+export function format() {
+    return src([dirs.js, dirs.html])
         .pipe(eslint({ configFile: "./.eslintrc.cjs" }))
         .pipe(eslint.formatEach("compact", process.stderr))
         .pipe(prettier({ config: "./.prettier.config.cjs" }))
         .pipe(dest("./src"));
 }
+
+// ======================================================= //
+
 
 export function bundleJS() {
     return src('./src/public/js/chat.js')
@@ -80,5 +86,5 @@ export function watcher(cb) {
     cb()
 }
 
-export const all = parallel(html, buildStyles, series(formatJS,copyCheckbox,bundleJS));
+export const all = parallel(html, prettifySass, buildStyles, series(format,copyCheckbox,bundleJS));
 export default watcher;

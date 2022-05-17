@@ -1,28 +1,33 @@
 @use "variables.scss" as *;
 
-label {font-weight:600}
+label {
+    font-weight: 600;
+}
 
 input,
 small {
-  min-width: 350px;
-  max-width: 350px;
-  display: block;
+    min-width: 350px;
+    max-width: 350px;
+    display: block;
 }
 
 input:focus {
-  border: 1px dashed rgba(125, 15, 44, 0.7);
+    border: 1px dashed rgba(125, 15, 44, 0.7);
 }
 
-.form { display:grid; place-items:center; padding-top: 1.5rem; }
+.form {
+    display: grid;
+    place-items: center;
+    padding-top: 1.5rem;
+}
 
-
-.form_seepwd{ 
-  display:flex; 
-  flex-direction:row; 
-  input[type=checkbox]{ 
-    display: inline-block;
-    min-width:unset; 
-    max-width:unset; 
-    margin-right:0.3rem; 
-  }
+.form_seepwd {
+    display: flex;
+    flex-direction: row;
+    input[type="checkbox"] {
+        display: inline-block;
+        min-width: unset;
+        max-width: unset;
+        margin-right: 0.3rem;
+    }
 }
