@@ -15,6 +15,7 @@ function formatJS() {
         .pipe(prettier({ config: "./.prettier.config.cjs" }))
         .pipe(dest("./"));
 }
+
 function watcher(cb) {
     watch(files, formatJS);
     cb();

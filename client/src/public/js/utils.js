@@ -2,28 +2,20 @@
  * Takes an li html element and sets the data-tid attribute
  * to a temporary id it makes sure that it is not repeated in the last 100 items.
  * this value is used to locate the element and add a database unique _id upon saving
- * @param li - html element
+ * @param items - html elements. It should receive the last 100 items
  */
 export function tempId(items) {
-    const tid = Math.random().toString();
-    if (!items || items.length == 0) {
-        return tid;
-    } else if (items.length !== 0) {
-        let match = false;
-        for (let i = items.length - 1; i > items.length - 100 && i > 0; i--) {
-            if (items[i].getAttribute("data-tid") == tid) {
-                match = true;
-                break;
-            }
-        }
+    const tid = Math.random().toString(10);
+    if (!Array.isArray(items) || items.length == 0)  return tid;
+     else {
+        const match = items.some(item=>item.getAttribute("data-tid")===tid) 
         if (!match) return tid;
         else {
             return tempId(items);
         }
-    } else {
-        throw "error";
-    }
+    } 
 }
+
 //first 5 symbols (0,1,2,3,4)
 export const msgDate = (createdAt) =>
     new Date(createdAt).toTimeString().substr(0, 5);

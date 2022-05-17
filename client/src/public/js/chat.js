@@ -1,9 +1,14 @@
 import io from "socket.io-client";
 
-import { messages, form, ul, prevMsgs, input } from "./elements.js";
 import { Message, msgToHTML, HTMLToDOM } from "./buildMsg.js";
 import { getLastMsgsAsync, getMsgsAsync } from "./fetch.js";
 import { tempId } from "./utils.js";
+
+const form = document.querySelector("form");
+const ul = document.getElementById("messages");
+const messages = ul.children;
+const input = document.getElementById("m");
+const prevMsgs = document.querySelector("button#wantMore");
 
 const uri = "http://localhost:3000";
 

@@ -1,14 +1,12 @@
 {
   "name": "Chat App Client Side",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Client Side of the Friends Chat App",
   "scripts":{
 	  "precommit":"gulp all",
           "commit": "git add . && git commit -m \"linted, prettified, prepared\"",
           "postcommit": "git push origin master" 
   },
-  "main": "index.js",
-  "keywords": [],
   "author": "Santiago Miranda <misterybodon@protonmail.com> (https://github.com/santimirandarp)",
   "license": "MIT",
   "devDependencies": {

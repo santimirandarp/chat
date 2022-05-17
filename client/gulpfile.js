@@ -66,7 +66,7 @@ export function bundleJS() {
                 mode: 'production',
                 devtool: 'inline-source-map',
                 entry: './src/public/js/chat.js',
-                target:'web'
+                target:'web',
             })
         )
         .pipe(dest('./dist/public/js'))

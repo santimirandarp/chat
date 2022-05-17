@@ -1,14 +1,15 @@
 {
   "name": "Chat App Server Side",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
-  "main": "bcrypt.js",
+  "main": "server.js",
   "scripts": {
     "serve": "nodemon server.js app.js own_modules/*.js --watch",
     "js":"eslint own_modules/*.js server.js app.js --cache --fix && prettier own_modules/*.js server.js app.js --write",
     "precommit":"npm run js",
     "commit":"git add . && git commit -m \"chore:lint and prettier\" ",
-    "postcommit":"git push origin master"
+    "postcommit":"git push origin master",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "Santiago Miranda <misterybodon@protonmail.com> (https://github.com/santimirandarp)",
