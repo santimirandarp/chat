@@ -3,13 +3,21 @@ import { connectDB } from "./connectDB.js";
 let db = connectDB(); //preconnect
 
 function find(coll, skip, limit) {
-  return coll
-    .find({})
-    .sort({ createdAt: -1 })
-    .skip(parseInt(skip))
-    .limit(parseInt(limit))
-    .toArray()
+  const pipeline = [{
+          "$sort":{createdAt:-1}
+          }, {
+                  "$skip":parseInt(skip), 
+        },
+        {
+        "$limit": parseInt(limit)
+}]
+  const docs = coll.aggregate(pipeline)
+  return docs
 }
+
+
+function save(coll, msg) { return coll.insertOne(msg) }
+
 
 function update(coll, { _id, msg }) {
   return coll.updateOne(
@@ -21,10 +29,6 @@ function update(coll, { _id, msg }) {
   );
 }
 
-function save(coll, msg) {
-  return coll.insertOne(msg);
-}
-
 function del(coll, id) {
   return coll.deleteOne({ _id: id });
 }
@@ -33,7 +37,7 @@ async function findMessages(req, res) {
   const { skip, limit } = req.params;
   try {
     let coll = (await db).collection("messages");
-    const doc = await find(coll, skip, limit);
+    const doc = await find(coll, skip, limit).toArray()
     console.log(doc)
     res.json(doc);
   } catch (e) {

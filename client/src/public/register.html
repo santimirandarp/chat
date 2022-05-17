@@ -35,7 +35,7 @@
           name="username"
           placeholder="Sergio"
           title="Single word (letters or numbers) with no spaces."
-          pattern="\w+"
+          pattern="^\w{4,20}$"
           minlength="4"
           maxlength="20"
           required
@@ -57,7 +57,7 @@
           placeholder="?my1password!"
           title="Include at least a special symbol a
 number and a letter"
-          pattern="\w+[^\s]"
+          pattern="^[^\s]+$"
           minlength="5"
           maxlength="20"
           required
@@ -71,7 +71,7 @@ number and a letter"
         </small>
       </div>
       <div class="form_submit">
-        <input id="loginButton" type="submit" value="Login" />
+        <input id="loginButton" type="submit" value="Register" />
       </div>
     </form>
     <p class="center">

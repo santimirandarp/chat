@@ -3,13 +3,13 @@ import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
 import dotenv from "dotenv";
-dotenv.config();
-import { Server } from "socket.io";
 import express from "express";
+import { Server } from "socket.io";
 import session from "express-session";
 
 import { run, chat } from "./app.js";
 
+dotenv.config();
 const { PORT, SECRET, PUBLIC } = process.env;
 
 const app = express();
@@ -30,6 +30,7 @@ app.use(express.urlencoded({ extended: true }));
  * the id will be decrypted, and searched through the ids database
  * if the session id is there, then the
  * req.session is populated
+ * For controlling access, we set the `req.session.isLogged` property
  */
 app.use(
   session({
@@ -37,7 +38,7 @@ app.use(
       /* domain */
       path: "/" /* and subpaths */,
       httpOnly: true /*  no access from Document.cookie */,
-      /* If true, only sent encrypted over HTTPS; * If false, also on HTTP (cleartext).  */
+      /* true uses HTTPS; false HTTP (cleartext).  */
       secure: app.get("env") === "production" ? true : false,
       sameSite: true /* only send to the webpage (domain) that **stored** it */,
     },
