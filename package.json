@@ -5,7 +5,10 @@
   "main": "bcrypt.js",
   "scripts": {
     "serve": "nodemon server.js app.js own_modules/*.js --watch",
-    "js":"eslint own_modules/*.js server.js app.js --cache --fix && prettier own_modules/*.js server.js app.js --write"
+    "js":"eslint own_modules/*.js server.js app.js --cache --fix && prettier own_modules/*.js server.js app.js --write",
+    "pre-commit":"npm run js",
+    "commit":"git add . && git commit -m \"chore:lint and prettier\" ",
+    "post-commit":"git push origin master"
   },
   "keywords": [],
   "author": "Santiago Miranda <misterybodon@protonmail.com> (https://github.com/santimirandarp)",

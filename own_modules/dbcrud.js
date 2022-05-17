@@ -1,10 +1,12 @@
 import { connectDB } from "./connectDB.js";
 
+// TODO index field createdAt in database, so the query for messages is faster.
+//
 let db = connectDB(); //preconnect
 
 function find(coll, skip, limit) {
   const pipeline = [{
-          "$sort":{createdAt:-1}
+          "$sort":{ createdAt:-1 }
           }, {
                   "$skip":parseInt(skip), 
         },
@@ -38,7 +40,6 @@ async function findMessages(req, res) {
   try {
     let coll = (await db).collection("messages");
     const doc = await find(coll, skip, limit).toArray()
-    console.log(doc)
     res.json(doc);
   } catch (e) {
     console.error(e);
