@@ -33,20 +33,20 @@ app.use(express.urlencoded({ extended: true }));
  * For controlling access, we set the `req.session.isLogged` property
  */
 app.use(
-  session({
-    cookie: {
-      /* domain */
-      path: "/" /* and subpaths */,
-      httpOnly: true /*  no access from Document.cookie */,
-      /* true uses HTTPS; false HTTP (cleartext).  */
-      secure: app.get("env") === "production" ? true : false,
-      sameSite: true /* only send to the webpage (domain) that **stored** it */,
-    },
-    resave: false /* don't save session if unmodified */,
-    saveUninitialized: false /* don't create session until something stored */,
-    secret: SECRET,
-    /* store: MemoryStore by default. Not for production. Use MongoStore or != ones...*/
-  })
+    session({
+        cookie: {
+            /* domain */
+            path: "/" /* and subpaths */,
+            httpOnly: true /*  no access from Document.cookie */,
+            /* true uses HTTPS; false HTTP (cleartext).  */
+            secure: app.get("env") === "production" ? true : false,
+            sameSite: true /* only send to the webpage (domain) that **stored** it */,
+        },
+        resave: false /* don't save session if unmodified */,
+        saveUninitialized: false /* don't create session until something stored */,
+        secret: SECRET,
+        /* store: MemoryStore by default. Not for production. Use MongoStore or != ones...*/
+    })
 );
 
 run(app, __dirname).catch(console.dir);

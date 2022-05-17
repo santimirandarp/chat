@@ -1,15 +1,12 @@
-import { msgDate, htmlCreate, createSelect } from './utils.js';
+import { msgDate, htmlCreate, createSelect } from "./utils.js";
 export class Message {
     constructor(data) {
         const { _id, tid, createdAt, msg } = data;
-        if (_id)
-            this._id = _id;
-        if (tid)
-            this.tid = tid;
+        if (_id) this._id = _id;
+        if (tid) this.tid = tid;
         if (createdAt instanceof Date) {
             this.createdAt = createdAt;
-        }
-        else {
+        } else {
             this.createdAt = new Date();
         }
         this.msg = msg;
@@ -25,19 +22,19 @@ export class Message {
 export const msgToHTML = (data) => {
     const { msg: m, createdAt, _id, tid, own } = data;
     // we build up the message HTML
-    const msg = htmlCreate('li', {
-        'data-id': _id || '',
-        'data-tid': tid || '',
+    const msg = htmlCreate("li", {
+        "data-id": _id || "",
+        "data-tid": tid || "",
     });
-    const date = htmlCreate('span', { class: 'time' });
+    const date = htmlCreate("span", { class: "time" });
     date.innerText = msgDate(createdAt);
-    const msgBody = document.createElement('span');
+    const msgBody = document.createElement("span");
     msgBody.innerText = m;
     //prepend elements to list item
     msg.prepend(date, msgBody);
-    if (!own)
-        return msg;
+    if (!own) return msg;
     msg.append(createSelect());
     return msg;
 };
-export const HTMLToDOM = (html, target, type = 'append') => (type === 'prepend' ? target.prepend(html) : target.append(html));
+export const HTMLToDOM = (html, target, type = "append") =>
+    type === "prepend" ? target.prepend(html) : target.append(html);

@@ -12,7 +12,7 @@ import eslint  from 'gulp-eslint-new';
 import prettier from 'gulp-prettier';
 
 const dirs = { 
-	html:'./src/**/*.html', 
+	html:'./src/**/**/*.html', 
 	scss:'./src/public/scss/*.scss', 
 	css:'./dist/public/css',
 	js:'./src/**/*.js'
@@ -21,6 +21,14 @@ const dirs = {
 export function html() { 
 	return src(dirs.html)
 		.pipe(dest('./dist/')) 
+}
+
+export function formatHTML() { 
+	return src(dirs.html)
+        .pipe(eslint({ configFile: "./.eslintrc.cjs" }))
+        .pipe(eslint.formatEach("compact", process.stderr))
+        .pipe(prettier({ config: "./.prettier.config.cjs" }))
+        .pipe(dest("./src"));
 }
 
 export function buildStyles() {
@@ -40,7 +48,7 @@ export function formatJS() {
         .pipe(eslint({ configFile: "./.eslintrc.cjs" }))
         .pipe(eslint.formatEach("compact", process.stderr))
         .pipe(prettier({ config: "./.prettier.config.cjs" }))
-        .pipe(dest("./"));
+        .pipe(dest("./src"));
 }
 
 export function bundleJS() {
@@ -63,12 +71,14 @@ export function copyCheckbox(){
 		.pipe(dest('./dist/public/js/'))
 }
 
+// in purpose not formatting the files that watches, vim would be confused
 export function watcher(cb) {
     watch('./src/index.html', html)
     watch('./src/sass/*.scss', buildStyles)
     watch('./src/js/*.js', bundleJS)
+    watch('./src/js/checkbox.js', copyCheckbox)
     cb()
 }
 
-export const all = parallel(html, buildStyles, bundleJS, copyCheckbox);
+export const all = parallel(html, buildStyles, series(formatJS,copyCheckbox,bundleJS));
 export default watcher;

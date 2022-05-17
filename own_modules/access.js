@@ -15,23 +15,25 @@ const router = express.Router();
 /* ==================== Login and Register ============================== */
 
 router
-  .route("/register")
-  .get((req, res) =>
-    res.sendFile(join(__dirname, "../", PUBLIC, "register.html"))
-  )
-  .post(register);
+    .route("/register")
+    .get((req, res) =>
+        res.sendFile(join(__dirname, "../", PUBLIC, "register.html"))
+    )
+    .post(register);
 
 router
-  .route("/login")
-  .get((req, res) => res.sendFile(join(__dirname, "../", PUBLIC, "login.html")))
-  .post(authenticate);
+    .route("/login")
+    .get((req, res) =>
+        res.sendFile(join(__dirname, "../", PUBLIC, "login.html"))
+    )
+    .post(authenticate);
 
 router.get("/logout", (req, res) => {
-  // destroy the user's session to log them out
-  // will be re-created next request
-  req.session.destroy(function () {
-    res.redirect("/access/login");
-  });
+    // destroy the user's session to log them out
+    // will be re-created next request
+    req.session.destroy(function () {
+        res.redirect("/access/login");
+    });
 });
 
 export default router;
