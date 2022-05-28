@@ -1,4 +1,5 @@
 import { msgDate, htmlCreate, createSelect } from "./utils.js";
+
 export class Message {
     constructor(data) {
         const { _id, tid, createdAt, msg } = data;
@@ -19,7 +20,7 @@ export class Message {
  * Once this is linked with a unique username/socket,
  * they will be able to act on the message.
  */
-export const msgToHTML = (data) => {
+export function msgToHTML(data) {
     const { msg: m, createdAt, _id, tid, own } = data;
     // we build up the message HTML
     const msg = htmlCreate("li", {
@@ -35,6 +36,8 @@ export const msgToHTML = (data) => {
     if (!own) return msg;
     msg.append(createSelect());
     return msg;
-};
-export const HTMLToDOM = (html, target, type = "append") =>
-    type === "prepend" ? target.prepend(html) : target.append(html);
+}
+
+export function HTMLToDOM(html, target, type = "append") {
+    return type === "prepend" ? target.prepend(html) : target.append(html);
+}

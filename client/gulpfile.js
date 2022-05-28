@@ -79,10 +79,10 @@ export function copyCheckbox(){
 
 // in purpose not formatting the files that watches, vim would be confused
 export function watcher(cb) {
-    watch('./src/index.html', html)
-    watch('./src/sass/*.scss', buildStyles)
-    watch('./src/js/*.js', bundleJS)
-    watch('./src/js/checkbox.js', copyCheckbox)
+    watch(dirs.html, html)
+    watch(dirs.scss, buildStyles)
+    watch(dirs.js, bundleJS)
+    watch('./src/public/js/checkbox.js', copyCheckbox)
     cb()
 }
 

@@ -33,6 +33,7 @@ async function main() {
 
         //1. collect the value and reset field
         const msg = input.value;
+                    console.log(_id)
         if (!msg) return;
         input.value = "";
 
@@ -47,22 +48,27 @@ async function main() {
         this.scrollTo(0, this.scrollHeight);
 
         //4.emit the message to server
-        socket.emit("save message", { msg: toSave.msg, tid: toSave.tid });
+        socket.emit("save", { msg: toSave.msg, tid: toSave.tid });
 
         //LI interaction
-        let msgOptions = li.querySelector(".msgOpts");
-        console.log(msgOptions);
+        let msgOptions = li.querySelector(".messageItem_select");
         msgOptions.onchange = function () {
             //'this' is the current element target
             let li = this.parentElement;
             const _id = li.getAttribute("data-id");
             if (this.value === "delete") {
-                //  if (!li.children('em')) li.append('<em>DELETING...</em>');
-                socket.emit("delete message", _id);
-                socket.on("message deleted", (msg) => {
+                socket.emit("delete", _id);
+                io.on("deleted", (_id) => {
+                    console.log(_id)
                     const em = document.createElement("em");
-                    em.innerText = msg;
+                    em.innerText =
+                        "Message was deleted. It will dissapear in 5 seconds.";
                     li.append(em);
+                    const ulSlice = messages.slice(-50);
+                    const toRemove = ulSlice.querySelector(
+                        `[data-id='${_id}']`
+                    );
+                    setTimeout(() => toRemove.remove(), 1000);
                 });
             } else {
                 console.log("nothing yet");
@@ -71,10 +77,10 @@ async function main() {
     };
 
     //5.change temporary id to permanent
-    socket.on("message saved", ({ _id, tid }) => {
+    socket.on("saved", ({ _id, tid }) => {
         for (
             let i = messages.length - 1;
-            i > messages.length - 1000 && i > 0;
+            i > messages.length - 200 && i > 0;
             i--
         ) {
             if (messages[i].getAttribute("data-tid") === tid) {
@@ -86,7 +92,7 @@ async function main() {
     });
 
     // client listens for new messages
-    socket.on("new message", (data) => {
+    socket.on("new", (data) => {
         HTMLToDOM(msgToHTML(data));
         form.scrollTo(0, form.scrollHeight);
     });

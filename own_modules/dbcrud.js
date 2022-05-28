@@ -29,7 +29,7 @@ function update(coll, { _id, msg }) {
         { _id },
         {
             msg: msg,
-            createdAt: Date(),
+            createdAt: new Date(),
         }
     );
 }

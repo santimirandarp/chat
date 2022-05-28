@@ -8,6 +8,7 @@ const files = ["**/*.js", "!node_modules/**", "!client/**"];
 // if we use vscode this is automatic,
 // otherwise we can run it when we are pissed off
 // also done in a precommit automatically using hooks
+
 function formatJS() {
     return src(files)
         .pipe(eslint({ configFile: "./.eslintrc.cjs" }))

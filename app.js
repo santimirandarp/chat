@@ -22,7 +22,7 @@ export async function run(app, dirname) {
     app.use("/access", access);
 
     // msgs
-    app.get("/messages/:skip/:limit", findMessages);
+    app.get("/messages/:skip/:limit", restrict, findMessages);
 
     // Other routes
     app.get("*", restrict, (req, res) => res.send("<p>Nothing to show...</p>"));
@@ -31,17 +31,21 @@ export async function run(app, dirname) {
 // this function returns a function
 export function chat(io) {
     return (socket) => {
+
         socket.on("save", async (msg) => {
             // a socket sends a message object
             try {
                 const coll = (await db).collection("messages");
+                msg.createdAt = new Date();
                 const s = await saveMessage(coll, msg);
                 // replace tid by id for sender
                 if (s) {
-                    socket.emit("saved", { _id: s._id, tid: s.tid });
-                    delete s["tid"];
-                    // the rest do not need a tid (not for sender)
-                    socket.broadcast.emit("new", s);
+                    const Id = s.insertedId
+                    socket.emit("saved", { _id:Id , tid: msg.tid });
+                    delete msg["tid"];
+                    msg._id = Id
+                    // the rest do not need a tid
+                    socket.broadcast.emit("new", msg);
                 }
             } catch (e) {
                 socket.emit("save error", e);
@@ -49,6 +53,7 @@ export function chat(io) {
         });
 
         socket.on("delete", async (_id) => {
+      console.log(_id)
             try {
                 const coll = (await db).collection("messages");
                 const del = await deleteMessage(coll, _id);
@@ -66,8 +71,9 @@ export function chat(io) {
                 const suc = await updateMessage(coll, { _id, msg });
                 if (suc) io.emit("updated", { id: _id, updateTo: msg });
             } catch (e) {
-                socket.emit("update message error", e);
+                socket.emit("update error", e);
             }
         });
+
     };
 }
