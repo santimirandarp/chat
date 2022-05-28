@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { connectDB } from "./connectDB.js";
 
 // TODO index field createdAt in database, so the query for messages is faster.
@@ -35,7 +36,7 @@ function update(coll, { _id, msg }) {
 }
 
 function del(coll, id) {
-    return coll.deleteOne({ _id: id });
+    return coll.deleteOne({ _id: ObjectId(id) });
 }
 
 async function findMessages(req, res) {

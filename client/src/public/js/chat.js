@@ -33,7 +33,7 @@ async function main() {
 
         //1. collect the value and reset field
         const msg = input.value;
-                    console.log(_id)
+
         if (!msg) return;
         input.value = "";
 
@@ -58,8 +58,7 @@ async function main() {
             const _id = li.getAttribute("data-id");
             if (this.value === "delete") {
                 socket.emit("delete", _id);
-                io.on("deleted", (_id) => {
-                    console.log(_id)
+                socket.on("deleted", (_id) => {
                     const em = document.createElement("em");
                     em.innerText =
                         "Message was deleted. It will dissapear in 5 seconds.";

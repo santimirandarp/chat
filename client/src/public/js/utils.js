@@ -5,7 +5,6 @@
  */
 //first 5 symbols (0,1,2,3,4)
 export function msgDate(createdAt) {
-    console.log(createdAt);
     return new Date(createdAt).toTimeString().substr(0, 5);
 }
 /**

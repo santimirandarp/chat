@@ -53,11 +53,10 @@ export function chat(io) {
         });
 
         socket.on("delete", async (_id) => {
-      console.log(_id)
             try {
                 const coll = (await db).collection("messages");
                 const del = await deleteMessage(coll, _id);
-                if (del) {
+                  if (del.deletedCount===1) {
                     io.emit("deleted", _id);
                 }
             } catch (e) {
