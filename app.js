@@ -14,7 +14,7 @@ let db = connectDB(); //preconnect
 
 export async function run(app, dirname) {
     // main site
-    app.get("/", restrict, (req, res) => {
+    app.get("/", /*restrict,*/ (req, res) => {
         res.sendFile(join(dirname, "client/dist/index.html"));
     });
 
@@ -22,7 +22,7 @@ export async function run(app, dirname) {
     app.use("/access", access);
 
     // msgs
-    app.get("/messages/:skip/:limit", restrict, findMessages);
+    app.get("/messages/:skip/:limit", /*restrict,*/ findMessages);
 
     // Other routes
     app.get("*", restrict, (req, res) => res.send("<p>Nothing to show...</p>"));

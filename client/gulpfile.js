@@ -64,7 +64,7 @@ export function bundleJS() {
                 output: { filename: 'chat.js' },
                 node: false,
                 mode: 'production',
-                devtool: 'inline-source-map',
+                devtool: 'source-map',
                 entry: './src/public/js/chat.js',
                 target:'web',
             })

@@ -2,7 +2,7 @@ import io from "socket.io-client";
 
 import { Message, msgToHTML, HTMLToDOM } from "./buildMsg.js";
 import { getLastMsgsAsync, getMsgsAsync } from "./fetch.js";
-import { tempId } from "./utils.js";
+import { runOverLastItems, tempId } from "./utils.js";
 
 const form = document.querySelector("form");
 const ul = document.getElementById("messages");
@@ -10,7 +10,7 @@ const messages = ul.children;
 const input = document.getElementById("m");
 const prevMsgs = document.querySelector("button#wantMore");
 
-const uri = "http://localhost:3000";
+const uri = "http://192.168.178.72:3000";
 
 async function main() {
     //open socket to uri
@@ -63,11 +63,7 @@ async function main() {
                     em.innerText =
                         "Message was deleted. It will dissapear in 5 seconds.";
                     li.append(em);
-                    const ulSlice = messages.slice(-50);
-                    const toRemove = ulSlice.querySelector(
-                        `[data-id='${_id}']`
-                    );
-                    setTimeout(() => toRemove.remove(), 1000);
+                    setTimeout(() => li.remove(), 1000);
                 });
             } else {
                 console.log("nothing yet");
@@ -85,16 +81,17 @@ async function main() {
             if (messages[i].getAttribute("data-tid") === tid) {
                 messages[i].setAttribute("data-id", _id);
                 messages[i].removeAttribute("data-tid");
-                break;
+break;
             }
-        }
-    });
+}
+})
 
     // client listens for new messages
     socket.on("new", (data) => {
-        HTMLToDOM(msgToHTML(data));
+        HTMLToDOM(msgToHTML(data),ul);
         form.scrollTo(0, form.scrollHeight);
-    });
-    //end main
+    })
+
 }
-main().catch((e) => console.log(e));
+main().catch((e) => console.log(e))
+
