@@ -50,7 +50,8 @@ app.use(
     })
 );
 
-run(app, __dirname).catch(console.dir);
+try { run(app, __dirname) } 
+catch(e){ console.log(e) }
 
 io.on("connection", chat(io));
 

@@ -50,25 +50,6 @@ async function main() {
         //4.emit the message to server
         socket.emit("save", { msg: toSave.msg, tid: toSave.tid });
 
-        //LI interaction
-        let msgOptions = li.querySelector(".messageItem_select");
-        msgOptions.onchange = function () {
-            //'this' is the current element target
-            let li = this.parentElement;
-            const _id = li.getAttribute("data-id");
-            if (this.value === "delete") {
-                socket.emit("delete", _id);
-                socket.on("deleted", (_id) => {
-                    const em = document.createElement("em");
-                    em.innerText =
-                        "Message was deleted. It will dissapear in 5 seconds.";
-                    li.append(em);
-                    setTimeout(() => li.remove(), 1000);
-                });
-            } else {
-                console.log("nothing yet");
-            }
-        };
     };
 
     //5.change temporary id to permanent
