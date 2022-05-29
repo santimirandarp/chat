@@ -1,8 +1,6 @@
-import io from "socket.io-client";
-
 import { Message, msgToHTML, HTMLToDOM } from "./buildMsg.js";
 import { getLastMsgsAsync, getMsgsAsync } from "./fetch.js";
-import { runOverLastItems, tempId } from "./utils.js";
+import { messageItemInteraction, tempId } from "./utils.js";
 
 const form = document.querySelector("form");
 const ul = document.getElementById("messages");
@@ -50,9 +48,12 @@ async function main() {
         //4.emit the message to server
         socket.emit("save", { msg: toSave.msg, tid: toSave.tid });
 
+        //5. delete message
+                const messageItemSelect = li.querySelector(".messageItem_select");
+                messageItemSelect.onchange = messageItemInteraction(socket, messageItemSelect);
     };
 
-    //5.change temporary id to permanent
+    //5. change temporary id to permanent
     socket.on("saved", ({ _id, tid }) => {
         for (
             let i = messages.length - 1;
@@ -60,19 +61,18 @@ async function main() {
             i--
         ) {
             if (messages[i].getAttribute("data-tid") === tid) {
-                messages[i].setAttribute("data-id", _id);
-                messages[i].removeAttribute("data-tid");
-break;
+                const li = messages[i];
+                li.setAttribute("data-id", _id);
+                li.removeAttribute("data-tid");
+                //LI interaction
+                break;
             }
-}
-})
-
+        }
+    });
     // client listens for new messages
     socket.on("new", (data) => {
-        HTMLToDOM(msgToHTML(data),ul);
+        HTMLToDOM(msgToHTML(data), ul);
         form.scrollTo(0, form.scrollHeight);
-    })
-
+    });
 }
-main().catch((e) => console.log(e))
-
+main().catch((e) => console.log(e));

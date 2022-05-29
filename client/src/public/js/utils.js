@@ -86,3 +86,22 @@ export function replaceTId(element, _id) {
     element.setAttribute("data-id", _id);
     element.removeAttribute("data-tid");
 }
+
+export function messageItemInteraction (socket, select) {
+return () => {
+    //'this' is the current element target
+    let li = select.parentElement;
+    const _id = li.getAttribute('data-id')
+    if ( _id!=="" && select.value === "delete") {
+        socket.emit("delete", _id);
+        socket.on("deleted", () => {
+            const em = document.createElement("em");
+            em.innerText =
+                "Message was deleted. It will dissapear in 5 seconds.";
+            li.append(em);
+            setTimeout(() => li.remove(), 3000);
+        });
+    } else {
+        console.log("Item not saved yet");
+    }
+}}

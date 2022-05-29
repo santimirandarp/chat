@@ -1,4 +1,5 @@
 import { msgDate, htmlCreate, createSelect } from "./utils.js";
+import DOMPurify from "dompurify";
 
 export class Message {
     constructor(data) {
@@ -30,7 +31,7 @@ export function msgToHTML(data) {
     const date = htmlCreate("span", { class: "time" });
     date.innerText = msgDate(createdAt);
     const msgBody = document.createElement("span");
-    msgBody.innerText = m;
+    msgBody.innerHTML = DOMPurify.sanitize(marked.parse(m));
     //prepend elements to list item
     msg.prepend(date, msgBody);
     if (!own) return msg;

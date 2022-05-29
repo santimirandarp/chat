@@ -1,4 +1,4 @@
-module.exports={
+module.exports = {
   "env": {
     "browser": true,
     "es2021": true
@@ -9,5 +9,6 @@ module.exports={
     "sourceType": "module"
   },
   "rules": {},
-  "plugins": ["html"]
+  "plugins": ["html"],
+  "globals": { "io": true, "dompurify":true, "marked":true }
 }

@@ -24,7 +24,7 @@ const __dirname = dirname(__filename);
 app.use(express.static(join(__dirname, PUBLIC)));
 app.use(express.static(join(__dirname, PUBLIC, "favicon")));
 
-app.use(express.json())
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /*
@@ -50,8 +50,11 @@ app.use(
     })
 );
 
-try { run(app, __dirname) } 
-catch(e){ console.log(e) }
+try {
+    run(app, __dirname);
+} catch (e) {
+    console.log(e);
+}
 
 io.on("connection", chat(io));
 
